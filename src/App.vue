@@ -7,6 +7,8 @@
   <img alt="Vue logo" src="./assets/logo.png" />
   <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
   <NavTitle />
+  <NavTitle2 />
+  <el-button>dsdsd</el-button>
 </template>
 
 <style>

@@ -46,7 +46,7 @@ export default  ({ command, mode }: ConfigEnv): UserConfigExport => {
     // elementUi组件自动引入
     Components({
       resolvers: [ElementPlusResolver()],
-      dts: true,
+      dts: 'src/components.d.ts',
     }),
     styleImport({
       resolves: [
@@ -57,7 +57,7 @@ export default  ({ command, mode }: ConfigEnv): UserConfigExport => {
     AutoImport({
       imports: ['vue', 'vue-router'],
       // 可以选择auto-import.d.ts生成的位置，使用ts建议设置为'src/auto-import.d.ts'
-      // dts: 'src/auto-import.d.ts'
+      dts: 'src/auto-import.d.ts'
     }),
     WindiCSS(),
     //     // gzip插件，打包压缩代码成gzip  文档： https://github.com/anncwb/vite-plugin-compression
@@ -84,7 +84,7 @@ export default  ({ command, mode }: ConfigEnv): UserConfigExport => {
   //     }),
 
   //     // gzip插件，打包压缩代码成gzip  文档： https://github.com/anncwb/vite-plugin-compression
-  //     viteCompression()
+      viteCompression()
   //   )
   // } else {
   //   // plugins.push(

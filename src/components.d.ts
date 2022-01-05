@@ -4,8 +4,11 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ElButton: typeof import('element-plus/es')['ElButton']
+    ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     NavTitle: typeof import('./components/nav/NavTitle.vue')['default']
+    NavTitle2: typeof import('./components/nav/NavTitle2.vue')['default']
   }
 }
 
