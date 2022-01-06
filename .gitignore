@@ -4,3 +4,5 @@ dist
 dist-ssr
 *.local
 /src/*.d.ts
+/dist
+/test

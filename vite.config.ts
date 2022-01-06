@@ -49,8 +49,17 @@ export default  ({ command, mode }: ConfigEnv): UserConfigExport => {
       dts: 'src/components.d.ts',
     }),
     styleImport({
-      resolves: [
-        ElementPlusResolve(),
+      // resolves: [
+      //   ElementPlusResolve(),
+      // ],
+      libs: [
+        {
+          libraryName: 'element-plus',
+          esModule: true,
+          resolveStyle: (name) => {
+            return `element-plus/theme-chalk/${name}.css`
+          },
+        },
       ],
     }),
     // 自动引入
