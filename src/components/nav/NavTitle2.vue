@@ -37,6 +37,22 @@
         </el-date-picker>
       </div>
     </div>
+    <div class="container">
+      <div class="block">
+        <span class="demonstration">Year</span>
+        <el-date-picker v-model="value3" type="year" placeholder="Pick a year">
+        </el-date-picker>
+      </div>
+      <div class="block">
+        <span class="demonstration">Dates</span>
+        <el-date-picker
+          v-model="value4"
+          type="dates"
+          placeholder="Pick one or more dates"
+        >
+        </el-date-picker>
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
