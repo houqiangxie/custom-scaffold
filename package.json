@@ -1,6 +1,7 @@
 {
   "name": "custom-scaffold",
   "version": "0.0.0",
+  "homepage":"https://houqiangxie.github.io/custom-scaffold",
   "scripts": {
     "dev": "vite --mode dev",
     "test": "vite build --mode test",
