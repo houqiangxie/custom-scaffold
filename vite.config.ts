@@ -10,6 +10,7 @@ import { ElementPlusResolver, AntDesignVueResolver, VantResolver, HeadlessUiReso
 import styleImport, {  AndDesignVueResolve,  VantResolve,  ElementPlusResolve,  NutuiResolve,  AntdResolve} from 'vite-plugin-style-import'
 import AutoImport from 'unplugin-auto-import/vite'
 import WindiCSS from 'vite-plugin-windicss'
+import { VitePWA } from 'vite-plugin-pwa'
 
 
 const pathResolve = (dir: string): string => resolve(__dirname, '.', dir)
@@ -69,9 +70,6 @@ export default  ({ command, mode }: ConfigEnv): UserConfigExport => {
       dts: 'src/auto-import.d.ts'
     }),
     WindiCSS(),
-    //     // gzip插件，打包压缩代码成gzip  文档： https://github.com/anncwb/vite-plugin-compression
-    viteCompression(),
-
     /**
      *  把src/icons 下的所有svg 自动加载到body下，供组件使用
      *  类似于webpack中的svg-sprite-loader
@@ -85,16 +83,49 @@ export default  ({ command, mode }: ConfigEnv): UserConfigExport => {
     // })
   ]
 
-  // if (!isDev) {
-  //   plugins.push(
-  //     // 兼容插件
-  //     legacy({
-  //       targets: ['defaults', 'not IE 11'],
-  //     }),
+  if (!isDev) {
+    plugins.push(
+      // // 兼容插件
+      // legacy({
+      //   targets: ['defaults', 'not IE 11'],
+      // }),
 
-  //     // gzip插件，打包压缩代码成gzip  文档： https://github.com/anncwb/vite-plugin-compression
-      viteCompression()
-  //   )
+      // gzip插件，打包压缩代码成gzip  文档： https://github.com/anncwb/vite-plugin-compression
+      viteCompression(),
+      // pwa离线缓存
+      VitePWA({
+        srcDir: env.VITE_APP_outputDir,
+        includeAssets: ['favicon.ico'],
+        manifest: false,
+        registerType: 'autoUpdate',
+        workbox: {
+          runtimeCaching: [
+            // {
+            //   urlPattern: /someInterface/i, // 接口缓存 此处填你想缓存的接口正则匹配
+            //   handler: 'CacheFirst',
+            //   options: {
+            //     cacheName: 'interface-cache',
+            //   },
+            // },
+            {
+              urlPattern: /(.*?)\.(js|css|ts)/, // js /css /ts静态资源缓存
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'js-css-cache',
+              },
+            },
+            {
+              urlPattern: /(.*?)\.(png|jpe?g|svg|gif|bmp|psd|tiff|tga|eps)/, // 图片缓存
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'image-cache',
+              },
+            },
+          ],
+        },
+      }),
+    )
+  }
   // } else {
   //   // plugins.push(
   //   //   // mock  文档：https://github.com/anncwb/vite-plugin-mock
