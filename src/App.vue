@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import MessageTest from './components/MessageTest.vue';
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 </script>
@@ -7,6 +8,10 @@
   <img alt="Vue logo" src="./assets/logo.png" />
   <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
   <NavTitle />
+  <NavTitle2 />
+  <el-button>dsdsd</el-button>
+  <DialogTest></DialogTest>
+  <MessageTest></MessageTest>
 </template>
 
 <style>
