@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import MessageTest from './components/MessageTest.vue';
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-</script>
-
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
   <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
@@ -12,7 +6,20 @@ import MessageTest from './components/MessageTest.vue';
   <el-button>dsdsd</el-button>
   <DialogTest></DialogTest>
   <MessageTest></MessageTest>
+  {{testA}}
 </template>
+
+
+<script setup lang="ts">
+ import { useTestStore } from './store/text';
+ const store:any =useTestStore()
+  let {testA,testB,testC}  =toRefs(store)
+
+  setTimeout(() => {
+    testA='5555'
+    console.log('testA: ')
+  }, 5000);
+</script>
 
 <style>
 #app {
