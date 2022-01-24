@@ -1,5 +1,5 @@
 module.exports = {
   extends: [
-    // 'vue-global-api'
+    'vue-global-api', 
   ]
 };

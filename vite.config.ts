@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv, UserConfigExport, ConfigEnv } from 'vite'
+import { defineConfig, loadEnv, UserConfigExport, ConfigEnv,searchForWorkspaceRoot } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import Components from 'unplugin-vue-components/vite'
@@ -26,6 +26,11 @@ export default  ({ command, mode }: ConfigEnv): UserConfigExport => {
       script: {
         refSugar: true, //ref转换
       },
+      template: {
+        compilerOptions: {
+          isCustomElement: tag => /^micro-app/.test(tag)
+        }
+      }
     }),
     vueJsx(), //jsx
     /**
@@ -109,34 +114,37 @@ export default  ({ command, mode }: ConfigEnv): UserConfigExport => {
   // https://vitejs.dev/config/
   return defineConfig({
     plugins,
-    base: isDev ? './' : '/custom-scaffold', // 设置打包路径
+    base: isDev ? "./" : "/custom-scaffold", // 设置打包路径
     //静态资源服务的文件夹
-    publicDir: 'public',
+    publicDir: "public",
     server: {
       // 设置代理，根据我们项目实际情况配置
       open: true, // 设置服务启动时是否自动打开浏览器
       cors: true, // 允许跨域
-      port: 8081,
+      port: 80,
       hmr: { overlay: false },
-      host: '0.0.0.0',
+      host: "0.0.0.0",
       proxy: {
-        '/api': {
-          target:  'http://172.16.15.190:30003/',
+        "/api": {
+          target: "http://172.16.15.190:30003/",
           // target:  'http://172.16.16.145:8080/',
           changeOrigin: true, // 是否跨域
-          rewrite: (path) => path.replace(/^\/api/, ''),
+          rewrite: (path) => path.replace(/^\/api/, ""),
         },
-        '/nogateway': {
+        "/nogateway": {
           // 不走网关
-          target: 'http://172.16.15.190:30004/',
+          target: "http://172.16.15.190:30004/",
           changeOrigin: true, // 是否跨域
-          rewrite: (path) => path.replace(/^\/nogateway/, ''),
+          rewrite: (path) => path.replace(/^\/nogateway/, ""),
         },
+      },
+      fs: {
+        allow: [searchForWorkspaceRoot(process.cwd()), "/microappchild1/"],
       },
     },
     resolve: {
       alias: [
-        { find: '@', replacement: pathResolve('src') },
+        { find: "@", replacement: pathResolve("src") },
         // 解决警告You are running the esm-bundler build of vue-i18n. It is recommended to configure your bundler to explicitly replace feature flag globals with boolean literals to get proper tree-shaking in the final bundle.
         // {
         //   find: "vue-i18n",
@@ -145,13 +153,13 @@ export default  ({ command, mode }: ConfigEnv): UserConfigExport => {
       ],
     },
     build: {
-      target: 'es2015',
+      target: "es2015",
       outDir: env.VITE_APP_outputDir,
-      assetsDir: 'assets',
+      assetsDir: "assets",
       assetsInlineLimit: 2048,
       cssCodeSplit: true,
       // Terser 相对较慢，但大多数情况下构建后的文件体积更小。ESbuild 最小化混淆更快但构建后的文件相对更大。
-      minify: isDev ? 'esbuild' : 'terser',
+      minify: isDev ? "esbuild" : "terser",
       terserOptions: {
         compress: {
           // 生产环境去除console
@@ -169,5 +177,5 @@ export default  ({ command, mode }: ConfigEnv): UserConfigExport => {
         },
       },
     },
-  })
+  });
 }
