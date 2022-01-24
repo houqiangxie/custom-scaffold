@@ -145,11 +145,7 @@ export default  ({ command, mode }: ConfigEnv): UserConfigExport => {
   // https://vitejs.dev/config/
   return defineConfig({
     plugins,
-<<<<<<< HEAD
-    base: isDev ? "./" : "/custom-scaffold", // 设置打包路径
-=======
     base: isDev||mode=='buildDev' ? './' : '/custom-scaffold', // 设置打包路径
->>>>>>> 11a837da888c9ca0b98710c81f59b8b2c033f9ef
     //静态资源服务的文件夹
     publicDir: "public",
     server: {
