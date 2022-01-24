@@ -5,4 +5,9 @@ import 'vue-global-api'
 import router from '@/router'
 import '@/microApp'
 
-createApp(App).use(router).mount("#app");
+import { createPinia } from 'pinia'
+
+import { useRegisterSW } from 'virtual:pwa-register/vue';
+useRegisterSW();
+
+createApp(App).use(createPinia()).mount('#app')

@@ -10,6 +10,7 @@ import { ElementPlusResolver, AntDesignVueResolver, VantResolver, HeadlessUiReso
 import styleImport, {  AndDesignVueResolve,  VantResolve,  ElementPlusResolve,  NutuiResolve,  AntdResolve} from 'vite-plugin-style-import'
 import AutoImport from 'unplugin-auto-import/vite'
 import WindiCSS from 'vite-plugin-windicss'
+import { VitePWA } from 'vite-plugin-pwa'
 
 
 const pathResolve = (dir: string): string => resolve(__dirname, '.', dir)
@@ -69,14 +70,11 @@ export default  ({ command, mode }: ConfigEnv): UserConfigExport => {
     }),
     // 自动引入
     AutoImport({
-      imports: ['vue', 'vue-router'],
+      imports: ['vue', 'vue-router','pinia'],
       // 可以选择auto-import.d.ts生成的位置，使用ts建议设置为'src/auto-import.d.ts'
       dts: 'src/auto-import.d.ts'
     }),
     WindiCSS(),
-    //     // gzip插件，打包压缩代码成gzip  文档： https://github.com/anncwb/vite-plugin-compression
-    viteCompression(),
-
     /**
      *  把src/icons 下的所有svg 自动加载到body下，供组件使用
      *  类似于webpack中的svg-sprite-loader
@@ -90,16 +88,49 @@ export default  ({ command, mode }: ConfigEnv): UserConfigExport => {
     // })
   ]
 
-  // if (!isDev) {
-  //   plugins.push(
-  //     // 兼容插件
-  //     legacy({
-  //       targets: ['defaults', 'not IE 11'],
-  //     }),
+  if (!isDev) {
+    plugins.push(
+      // // 兼容插件
+      // legacy({
+      //   targets: ['defaults', 'not IE 11'],
+      // }),
 
-  //     // gzip插件，打包压缩代码成gzip  文档： https://github.com/anncwb/vite-plugin-compression
-      viteCompression()
-  //   )
+      // gzip插件，打包压缩代码成gzip  文档： https://github.com/anncwb/vite-plugin-compression
+      viteCompression(),
+      // pwa离线缓存
+      VitePWA({
+        srcDir: env.VITE_APP_outputDir,
+        includeAssets: ['favicon.ico'],
+        manifest: false,
+        registerType: 'autoUpdate',
+        workbox: {
+          runtimeCaching: [
+            // {
+            //   urlPattern: /someInterface/i, // 接口缓存 此处填你想缓存的接口正则匹配
+            //   handler: 'CacheFirst',
+            //   options: {
+            //     cacheName: 'interface-cache',
+            //   },
+            // },
+            {
+              urlPattern: /(.*?)\.(js|css|ts)/, // js /css /ts静态资源缓存
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'js-css-cache',
+              },
+            },
+            {
+              urlPattern: /(.*?)\.(png|jpe?g|svg|gif|bmp|psd|tiff|tga|eps)/, // 图片缓存
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'image-cache',
+              },
+            },
+          ],
+        },
+      }),
+    )
+  }
   // } else {
   //   // plugins.push(
   //   //   // mock  文档：https://github.com/anncwb/vite-plugin-mock
@@ -114,7 +145,11 @@ export default  ({ command, mode }: ConfigEnv): UserConfigExport => {
   // https://vitejs.dev/config/
   return defineConfig({
     plugins,
+<<<<<<< HEAD
     base: isDev ? "./" : "/custom-scaffold", // 设置打包路径
+=======
+    base: isDev||mode=='buildDev' ? './' : '/custom-scaffold', // 设置打包路径
+>>>>>>> 11a837da888c9ca0b98710c81f59b8b2c033f9ef
     //静态资源服务的文件夹
     publicDir: "public",
     server: {

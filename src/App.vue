@@ -6,8 +6,16 @@
 
 
 <script setup lang="ts">
+ import { useTestStore } from './store/text';
+ const store:any =useTestStore()
+  let {testA,testB,testC}  =toRefs(store)
 
+  setTimeout(() => {
+    testA='5555'
+    console.log('testA: ')
+  }, 5000);
 </script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
