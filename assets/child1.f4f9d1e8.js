@@ -1,0 +1,1 @@
+import{a as o,c as l,j as r,o as a}from"./vendor.13ecf12a.js";const n=r("div",null,"应用1",-1),e=o({setup(o){const e=o=>{},s=o=>{console.log("error: ",o)};return(o,c)=>(a(),l("div",null,[n,r("micro-app",{name:"microappchild1",url:"http://localhost:8080/microappchild1/",inline:"",disableSandbox:"",onMounted:e,onError:s},null,32)]))}});export{e as default};

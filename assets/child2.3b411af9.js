@@ -1,0 +1,1 @@
+import{_ as r}from"./plugin-vue_export-helper.21dcd24c.js";import{c as o,o as a,j as l}from"./vendor.13ecf12a.js";const p={},e=[l("div",null,"应用2",-1),l("micro-app",{name:"micro-child-app",url:"http://localhost:8080/micro-child-app/",baseroute:"/app-child"},null,-1)];var c=r(p,[["render",function(r,l){return a(),o("div",null,e)}]]);export{c as default};
