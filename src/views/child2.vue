@@ -1,6 +1,6 @@
 <template>
     <div>
         <div>应用2</div>
-        <micro-app name="child1" url="http://localhost:9000" baseroute="/child1"></micro-app>
+        <micro-app name="micro-child-app" url="http://localhost:8080/micro-child-app/" baseroute="/app-child"></micro-app>
     </div>
 </template>

@@ -12,14 +12,14 @@ const routes:Array<RouteRecordRaw> = [
         component: () => import('@/views/child1.vue'),
     },
     {
-        path: '/child2/:page*',
+        path: '/app-child/:page*',
         name: 'Child2',
         component: ()=> import('@/views/child2.vue'),
     },
-    // {
-    //     path: '/:pathMatch(.*)*',
-    //     redirect:'Index'
-    // }
+    {
+        path: '/:pathMatch(.*)*',
+        redirect:'/'
+    }
 ]
 
 
